@@ -1,0 +1,8 @@
+githubTrending
+node_modules
+data.json
+language.json
+onlyLocal.js
+node_modules/
+out.json.gz
+env.ignore

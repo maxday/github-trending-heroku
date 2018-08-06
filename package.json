@@ -1,0 +1,27 @@
+{
+  "name": "github-trending",
+  "version": "1.0.0",
+  "description": "github trending tool",
+  "engines": {
+    "node": "8.9.1"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maxday/github-trending"
+  },
+  "keywords": [
+    "node",
+    "heroku",
+    "express"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@types/mongodb": "^3.0.5",
+    "mongodb": "^2.2.33",
+    "node-fetch": "^2.0.0"
+  }
+}
