@@ -1,22 +1,29 @@
-'use strict';
-const mongoClient = require('mongodb').MongoClient;
-const utils = require("./utils");
+const MongoClient = require('mongodb').MongoClient;
 
-const dropCollection = (collectionName) => new Promise((resolve, reject) => {
-    let currentConnection = null;
-    mongoClient.connect(utils.mongoConnectionUrl)
-    .then(conn => { currentConnection = conn; return conn.collection(collectionName); })
-    .then(conn => conn.drop())
-    .then(out => resolve({currentConnection, out}))
-    .catch(err => reject({currentConnection, err}));
-});
+const MONGO_DB = process.env.MONGO_DB
+const MONGO_COLLECTION = process.env.MONGO_COLLECTION
+const MONGO_STRING = process.env.MONGO_STRING;
 
-dropCollection(utils.collectionName)
-.then(res => {
-    console.log("success : ", res.out);
-    utils.closeConnection(res.currentConnection);
-})
-.catch(err => {
-    console.log("failure : ", err.err);
-    utils.closeConnection(err.currentConnection);
+const remove = async (connectUrl, dbName, collectionName) => {
+    const client = await MongoClient
+        .connect(connectUrl, { useNewUrlParser: true, useUnifiedTopology: true })
+        .catch(err => { console.log(err); });
+        if (!client) {
+            return;
+        }
+        try {
+            const db = client.db(dbName);
+            const collection = db.collection(collectionName);
+            await collection.drop();
+        } catch (err) {
+            console.log(err);
+        } finally {
+            client.close();
+        }
+}
+
+(async () => {
+    await remove(MONGO_STRING, MONGO_DB, MONGO_COLLECTION);
+})().catch(err => {
+    console.error(err);
 });

@@ -6,3 +6,4 @@ onlyLocal.js
 node_modules/
 out.json.gz
 env.ignore
+localVar.sh
